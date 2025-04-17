@@ -30,3 +30,17 @@ server é um bloco para lidar com o endereçamento da solicitação.
 `server_name` o domínio ou  endereço IP.
 
 `location` define como o nginx deve lidar com a solicitação, estamos configurando como um Proxy com a diretiva `proxy_pass` para as três instâncias do servidor nodejs no Docker que são referenciadas como um cluster na diretiva `upstream`.
+
+**SSL**
+
+Para acessar a aplicação através do https:// devemos adicionar o protocolo SSL. Crie uma pasta específica para guardar as chaves. Agora dentro dela execute o comando:
+
+```bash
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout nginx-selfsigned.key -out nginx-selfsigned.crt
+```
+
+Isto vai gerar duas chaves para validar o certificado SSL x509 válido por 365 dias e o local onde salvar as chaves publica e privada. A chave privada fica com o servidor nginx e a chave pública fica em todas as solicitações de requisições. O path da chave pública fica na diretiva `ssl_certificate` e o path da chave privada na diretiva `ssl_certificate_key`. (No path do windows é C:/etc…). 
+
+Pronto. Acesse https://localhost:443. O navegador ainda não reconhece como sseguro por que é um certificado autogerado, mas funcionou, em ambiente de produção os certificados SSL/TLS precisam ser emitidos $$ por uma Autoridade Certificadora (CA). Se você quer uma alternativa gratuita, pode usar o Let's Encrypt.
+
+O último servidor foi feito para que o NGINX redirecione uma solicitação http://localhost:8080 para https://localhost:443.
