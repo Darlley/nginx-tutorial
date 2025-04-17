@@ -1,5 +1,7 @@
 # Full NGINX Tutorial - Demo Project with Node.js, Docker
 
+[![tumbnail](https://raw.githubusercontent.com/Darlley/nginx-tutorial/refs/heads/main/thumbnail.avif)](https://youtu.be/q8OleYuqntY)
+
 Vídeo: https://youtu.be/q8OleYuqntY
 
 Este é um servidor Node com Express que serve um site estático.
